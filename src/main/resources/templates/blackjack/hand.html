@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+	<Head>
+		<title>Hand</title>
+
+    
+	</Head>
+
+	<body>
+		<form method="post" action="/">
+			<div>Player </div>
+			
+			<div>
+					Bet:
+						$<input autofocus type="number" id="bet" name="bet" placeholder="100">
+						<br>
+					Balance:
+						$<input type="number" id="bet" name="balance">
+
+						{{#playerHand.values}}
+						<div>
+							<input type="text" name="playerHand" value="{{ . }}">
+						</div>
+						{{/playerHand.values}}
+					
+					{{#playerHand.cards}}
+						<div>{{ visualRepresentation }} {{ suit }} </div>
+					{{/playerHand.cards}}
+
+				<form action="/hit" method="post">
+					<button>Hit</button>
+				</form>
+				
+				<form action="/stand" method="post">
+					<button>Stand</button>
+				</form>
+				
+				<form action="/surrender" method="post">
+					<button>Surrender</button>
+				</form>
+			</div>
+
+			<div>Dealer</div>
+			<div>
+				{{#dealerHand.values}}
+					<div>
+						<input type="text" name="dealerHand" value="{{ . }}">
+					</div>
+				{{/dealerHand.values}}
+				
+				{{#dealerHand.cards}}
+						<div>{{ visualRepresentation }} {{ suit }} </div>
+				{{/dealerHand.cards}}
+			</div>
+		</form>
+		
+	</body>
+	
+</html>

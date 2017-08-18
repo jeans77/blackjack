@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+	<Head>
+		<title>Initial</title>
+    
+	</Head>
+
+	<body>
+			<div>Player </div>
+			<div>
+				Bet:
+					$<input autofocus type="number" id="bet" name="bet" placeholder="100">
+						<br>
+				Balance:
+					$<input type="number" id="bet" name="balance">
+<br>
+
+					<form action="/hit" method="post">
+					<button>Hit</button>
+				</form>
+				
+				<form action="/stand" method="post">
+					<button>Stand</button>
+				</form>
+
+						{{#playerHand.values}}
+						<div>
+							<input type="text" name="playerHand" value="{{ . }}">
+						</div>
+						{{/playerHand.values}}
+				
+			</div>
+			<div>Dealer</div>
+			
+						{{#dealerHand.values}}
+						<div>
+							<input type="text" name="DealerHand" value="{{ . }}">
+						</div>
+						{{/dealerHand.values}}
+		
+	</body>
+	
+</html>
