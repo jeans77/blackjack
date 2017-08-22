@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html>
+
+	<head>
+	<style>
+
+		h1 {text-align: left;}
+		div {
+		display: block;
+		text-align: left;
+		}
+
+		body {
+  		background: green;
+  		font-size: 80%;
+  		padding: 20px;
+		}
+
+		main {
+  		position: relative;
+  		background: white;
+  		height: 5px;
+  		width: 30%;
+   		margin: 0 auto;
+  		padding: 20px;
+  		resize: both;
+  		overflow: auto;
+ 		}
+	</style>
+	
+	</head>
+	<body>
+		<h1>{{ roundOutcome }}</h1>
+		<div>
+		Balance: $ {{ playerBalance }}
+		</div>
+
+		<br>
+
+		Dealer Cards:
+		{{ #dealerCards }}
+			<div>{{ . }}</div>
+		{{ /dealerCards }}
+		<hr>
+		Player Cards:
+		{{ #playerCards }}
+			<div>{{ . }}</div>
+		{{ /playerCards }} 
+
+		{{ #showPlayButton }}
+			<form method="post" action="/blackjack/game/bet">
+				<input type="number" name="betAmount" value="" required>
+				<button>play again!</button>
+			</form>
+
+		{{ /showPlayButton }}
+		<form method="post" action="/blackjack">
+			<button>New Round</button>
+		</form>
+		
+	</body>
+
+</html>

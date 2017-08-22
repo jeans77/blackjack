@@ -7,28 +7,24 @@ public class AceCard implements Card {
 	public AceCard(String suit) {
 		this.suit = suit;
 	}
-	
-	@Override
-	public String toString() {
-		return this.getVisualRepresentation() + " of " + this.getSuit();
-	}
 
-
-	@Override
 	public String getSuit() {
 		return suit;
 	}
-	
 
-	@Override
-	public String getVisualRepresentation() {
+	public String getName() {
 		return "Ace";
 	}
-	
 
-	@Override
 	public int[] getValues() {
 		return new int[] { 1, 11 };
 	}
 	
+	/*	public String getVisualRepresentation() {
+		return "Ace";
+		} */
+	/*	public String toString() {
+		return this.getVisualRepresentation() + " of " + this.getSuit();
+		} */
+
 }

@@ -4,18 +4,19 @@ public class Deck {
 
 	private Card[] cards;
 	private int currrentCardIndex;
+	private boolean deckHasCards = true;
 	
 	public Deck() {
-		String[] suits = new String[] { "Heart", "Spade", "Club", "Diamond" };
+		String[] suits = new String[] { "Club", "Heart", "Diamonds", "Spade" };
 		int i = 0;
 		cards = new Card[52];
-		currrentCardIndex = 0;
+		currrentCardIndex = 51;
 		
-		for (String suit:suits) {
+		for (String suit : suits) {
 			cards[i] = new AceCard(suit);
 			i += 1;
 			
-			cards[i] = new FaceCard("Jack",suit);
+			cards[i] = new FaceCard("Jack", suit);
 			i += 1;
 			
 			cards[i] = new FaceCard("Queen", suit);
@@ -31,23 +32,12 @@ public class Deck {
 		}
 	}
 	
-//	public void printThis() {
-//	System.out.println("Before Shuffle:");
-//		for (Card card : cards) {
-//			System.out.println(card);
-//		}
-//	}
-	
-	public Card getCard() {
-		if (currrentCardIndex >= cards.length) {
-			return null;
+	public void printThis() {
+		for (Card card : cards) {
+																			System.out.println("Deck: " + card.getName() + " " + card.getSuit());
 		}
-		
-		Card cardToReturn = cards[currrentCardIndex];
-		currrentCardIndex += 1;
-		return cardToReturn;
 	}
-	
+		
 	public void shuffle() {
 		for (int doThisSevenTimes = 0; doThisSevenTimes < 7; doThisSevenTimes += 1) {			
 			Card[] tempCardHolder1 = new Card[26];
@@ -87,29 +77,16 @@ public class Deck {
 		}
 	}
 	
-	// returns the current card index
-	public int get(int currentCardIndex) {
-		return currentCardIndex;
-	}
-	
-	// returns deck is empty
 
-	public static boolean isEmpty() 
-	{
-		return Deck.isEmpty();
+	public Card dealCard() {
+		currrentCardIndex -= 1;
+		return cards[currrentCardIndex + 1];
 	}
-	
-	// returns the size of the deck
-	public int size() 
-	{
-		return cards.length;
+
+	public boolean deckHasCards () {
+			if 	(currrentCardIndex < 1) {
+				return false;
+			} else
+			return true;
 	}
-	
-//		public void printThis() {
-//			System.out.println("After Shuffle:");
-//		for (Card card : cards) {
-//			System.out.println(card);
-//		}
-//		}
-	
-}
+}	
