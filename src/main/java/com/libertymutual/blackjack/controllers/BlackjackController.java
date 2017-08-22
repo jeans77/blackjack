@@ -33,20 +33,18 @@ public class BlackjackController {
 	//Gets
 	@GetMapping("")
 		public String home() {
-		System.out.println("--> GET . ");
 		return "blackjack/start";
 	}
 	
 	@GetMapping("initial")
 		public String showPlayPage() {
-		System.out.println("--> GET initial");
 		return "blackjack/initial";
 	}
 	
 	@GetMapping("game")
 		public String showGamePage(Model model) {
-														System.out.println("--> GET /game");
 		model.addAttribute("playerBalance", playerBalance);
+		model.addAttribute("betAmount", betAmount);
 		model.addAttribute("dealerCard1", dealer.dealerHand.getCard(0).getName());
 		model.addAttribute("dealerCard2", dealer.dealerHand.getCard(1).getName());
 		model.addAttribute("dealerCardHoled", dealerCardHole);
@@ -60,13 +58,11 @@ public class BlackjackController {
 	
 	@PostMapping("")
 		public String backToHome() {
-		System.out.println("--> POST . ");
 		return "blackjack/start";
 	}
 	
 	@PostMapping("game/start")
 		public String startGame() {
-														System.out.println("--> POST /game/start");
 		deck.shuffle();
 		Hand dealerHand = new Hand();
 		player = null;
@@ -77,7 +73,6 @@ public class BlackjackController {
 	
 	@PostMapping("game/bet")
 		public String pushButtonBet(int betAmount, Model model) {
-														System.out.println("--> POST /game/bet");
 		// Setting the whole Game Table
 		//Create Hand (empty) for both player and dealer 
 		Hand playerHand = new Hand();
@@ -98,8 +93,7 @@ public class BlackjackController {
 			showPlayerButtons = false;
 			model.addAttribute("showPlayerButtons", showPlayerButtons);
 			model.addAttribute("playerBalance", playerBalance);
-//			model.addAttribute("playerCards", player.playerHand.getAllCards());
-//			model.addAttribute("dealerCards", dealer.dealerHand.getAllCards());
+			model.addAttribute("betAmount", betAmount);
 			return "blackjack/round-over";
 		}
 		
@@ -108,6 +102,7 @@ public class BlackjackController {
 			showPlayerButtons = false;
 			model.addAttribute("showPlayerButtons", showPlayerButtons);
 			model.addAttribute("playerBalance", playerBalance);
+			model.addAttribute("betAmount", betAmount);
 			return "blackjack//round-over";
 		}
 		
@@ -116,11 +111,10 @@ public class BlackjackController {
 			showPlayerButtons = false;
 			model.addAttribute("showPlayerButtons", showPlayerButtons);
 			model.addAttribute("playerBalance", playerBalance);
+			model.addAttribute("betAmount", betAmount);
 			return "blackjack//round-over";
 		}
-		
-//		return "blackjack/round-over";
-//		return "blackjack/start";
+	
 		return "redirect:/game";
 		
 
@@ -129,7 +123,6 @@ public class BlackjackController {
 	@PostMapping("game/hit")
 		public String pushHitButton(Model model) {
 		roundBucket = 0;
-														System.out.println("--> POST /game/hit");
 		int [] handValue = player.playerHand.getHandValue();									
 		if (!deck.deckHasCards()) {
 			return "redirect:/game/zero-cards";
@@ -137,15 +130,13 @@ public class BlackjackController {
 		player.playerHand.addCard(deck.dealCard());
 		handValue = player.playerHand.getHandValue();
 		playerBestScore = player.playerHand.getHandBestValue();
-//							System.out.println("--> POST /game/hit player updated hand value: " + handValue[0] + " " + handValue[1] + "Best: " + playerBestScore);
-//							System.out.println("--> POST /game/stand Player -Bal: " + playerBalance() + " -Bucket:" + roundBucket + " -bet:" + betAmount);
-
-														//Player Busted								
+		//Player Busted								
 		if (handValue[0] > 21 && handValue[1] > 21) {
 			roundBucket = -1 * betAmount;
 			playerBalance = playerBalance + roundBucket;
 							System.out.println("--> POST /game/hit Player -Bal: " + playerBalance + " -Bucket:" + roundBucket + " -bet:" + betAmount);
 			model.addAttribute("playerBalance", playerBalance);
+			model.addAttribute("betAmount", betAmount);
 			model.addAttribute("playerCards", player.playerHand.getAllCards());
 			model.addAttribute("dealerCards", dealer.dealerHand.getAllCards());
 			model.addAttribute("roundOutcome", "Player Busted");
@@ -163,8 +154,6 @@ public class BlackjackController {
 		roundBucket = 0;
 		int[] handValue = dealer.dealerHand.getHandValue();
 		dealerBestScore = dealer.dealerHand.getHandBestValue();
-					System.out.println("--> POST /game/stand");
-					System.out.println("--> POST /game/stand dealer hand befor Stand : " + handValue[0] + " " + handValue[1] + "Best: " + dealerBestScore);
 			//Dealer to Draw cards until 17 or More
 			while (handValue[0] < 17 || handValue[1] < 17) {
 				if (!deck.deckHasCards()) {
@@ -173,18 +162,11 @@ public class BlackjackController {
 			dealer.dealerHand.addCard(deck.dealCard());
 			handValue = dealer.dealerHand.getHandValue();
 			dealerBestScore = dealer.dealerHand.getHandBestValue();
-//					System.out.println("--> POST /game/stand dealer hand after Stand : " + handValue[0] + " " + handValue[1] + "Best: " + dealerBestScore);
-//					System.out.println("--> POST /game/stand bestScore -dealer: " + dealerBestScore + " -Player: " + playerBestScore);
-					System.out.println("--> POST /game/stand Player -Bal: " + playerBalance + " -Bucket:" + roundBucket + " -Outcome" + roundOutcome);
-
 			}
-			
-
 			model.addAttribute("playerCards", player.playerHand.getAllCards());
 			model.addAttribute("dealerCards", dealer.dealerHand.getAllCards());
 			
-			
-			//Dealer BalckJack
+			//Dealer BalackJack
 			if (dealerBestScore == 21) {
 				model.addAttribute("roundOutcome", "Blackjack Dealer");
 				roundBucket = -1 * betAmount;
@@ -221,22 +203,16 @@ public class BlackjackController {
 			}
 			
 			playerBalance = playerBalance + roundBucket;
-									System.out.println("--> POST /game/stand Player -Bal: " + playerBalance + " -Bucket:" + roundBucket + " -bet:" + betAmount);
 			model.addAttribute("playerBalance", playerBalance);
+			model.addAttribute("betAmount", betAmount);
 			return "blackjack/round-over";	
 		}
 		
-//		@GetMapping("/game/busted")
-//		public String busted(Model model) {
-//			System.out.println("--> GET /game/busted");
-//			return "blackjack/round-over";
-//		}
-		
 		@GetMapping("/game/zero-cards")
 		public String zeroCardsLeft(Model model) {
-			System.out.println("--> GET /game/zero-cards");
 			showPlayerButtons = false;
 			model.addAttribute("playerBalance", playerBalance);
+			model.addAttribute("betAmount", betAmount);
 			model.addAttribute("playerCards", player.playerHand.getAllCards());
 			model.addAttribute("dealerCards", dealer.dealerHand.getAllCards());
 			model.addAttribute("roundOutcome", "No Cards Left");
@@ -249,6 +225,7 @@ public class BlackjackController {
 		System.out.println("--> GET /game/notEnough-balance");
 		showPlayerButtons = false;
 		model.addAttribute("playerBalance", playerBalance);
+		model.addAttribute("betAmount", betAmount);
 		model.addAttribute("playerCards", player.playerHand.getAllCards());
 		model.addAttribute("dealerCards", dealer.dealerHand.getAllCards());
 		model.addAttribute("roundOutcome", "Not Enough Money for This Bet");
@@ -258,8 +235,8 @@ public class BlackjackController {
 	
 		@GetMapping("/game/round-over")
 		public String endGame(Model model) {
-																					System.out.println("--> GET /game/game-over");
 				model.addAttribute("playerBalance", playerBalance);
+				model.addAttribute("betAmount", betAmount);
 				model.addAttribute("playerCards", player.playerHand.getAllCards());
 				model.addAttribute("dealerCards", dealer.dealerHand.getAllCards());
 				model.addAttribute("showPlayerButtons", showPlayerButtons);

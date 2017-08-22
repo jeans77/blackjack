@@ -20,11 +20,4 @@ public class AceCard implements Card {
 		return new int[] { 1, 11 };
 	}
 	
-	/*	public String getVisualRepresentation() {
-		return "Ace";
-		} */
-	/*	public String toString() {
-		return this.getVisualRepresentation() + " of " + this.getSuit();
-		} */
-
 }

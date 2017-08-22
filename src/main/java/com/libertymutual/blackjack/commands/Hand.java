@@ -25,7 +25,6 @@ public class Hand {
 			for (Card c : cards) {
 				cardsList.add(c.getName());
 			}
-//											System.out.println("--> Cards in Hand:" + "CardList: " + cardsList + "Cards: " + cards);
 		return cardsList;
 		}
 		

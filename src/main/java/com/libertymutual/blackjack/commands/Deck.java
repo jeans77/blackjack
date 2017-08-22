@@ -34,10 +34,9 @@ public class Deck {
 	
 	public void printThis() {
 		for (Card card : cards) {
-																			System.out.println("Deck: " + card.getName() + " " + card.getSuit());
 		}
 	}
-		
+	//Shuffle Deck	
 	public void shuffle() {
 		for (int doThisSevenTimes = 0; doThisSevenTimes < 7; doThisSevenTimes += 1) {			
 			Card[] tempCardHolder1 = new Card[26];
