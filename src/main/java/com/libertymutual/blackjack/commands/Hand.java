@@ -60,6 +60,11 @@ public class Hand {
 					handBestValue = handValue[1];
 				}
 			return handBestValue;	
-			}
+		}
+		
+		public int getHandSize() {
+			int handSize = cards.size();
+			return handSize;
+		}
 
 	}

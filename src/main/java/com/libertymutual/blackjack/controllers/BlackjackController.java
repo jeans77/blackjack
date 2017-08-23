@@ -47,7 +47,7 @@ public class BlackjackController {
 		model.addAttribute("betAmount", betAmount);
 		model.addAttribute("dealerCard1", dealer.dealerHand.getCard(0).getName());
 		model.addAttribute("dealerCard2", dealer.dealerHand.getCard(1).getName());
-		model.addAttribute("dealerCardHoled", dealerCardHole);
+		model.addAttribute("dealerCardHole", dealerCardHole);
 		model.addAttribute("dealerCardShow" , dealerCardShow);
 		model.addAttribute("playerCards", player.playerHand.getAllCards());
 		model.addAttribute("playerHandValue", player.playerHand.getHandValue());
@@ -114,7 +114,8 @@ public class BlackjackController {
 			model.addAttribute("betAmount", betAmount);
 			return "blackjack//round-over";
 		}
-	
+		dealerCardHole = true;
+		dealerCardShow = false;
 		return "redirect:/game";
 		
 
@@ -166,14 +167,15 @@ public class BlackjackController {
 			model.addAttribute("playerCards", player.playerHand.getAllCards());
 			model.addAttribute("dealerCards", dealer.dealerHand.getAllCards());
 			
-			//Dealer BalackJack
+			//Dealer alackJack
 			if (dealerBestScore == 21) {
 				model.addAttribute("roundOutcome", "Blackjack Dealer");
 				roundBucket = -1 * betAmount;
 			}
 			
 			//Player BalckJack
-			if (dealerBestScore == 21) {
+			int playerHandSize = player.playerHand.getHandSize();
+			if (dealerBestScore == 21 && playerHandSize == 2 ) {
 				model.addAttribute("roundOutcome", "Blackjack Dealer");
 				roundBucket = betAmount * 3 / 2;
 			}
